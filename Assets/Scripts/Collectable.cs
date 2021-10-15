@@ -5,13 +5,13 @@ using UnityEngine;
 public enum CollectableType{
     healthPotion,
     manaPotion, 
-    money
+    empanadas
 }
 
 
 public class Collectable : MonoBehaviour {
 
-    public CollectableType type = CollectableType.money;
+    public CollectableType type = CollectableType.empanadas;
 
     private SpriteRenderer sprite;
     private CircleCollider2D itemCollider;
@@ -19,6 +19,13 @@ public class Collectable : MonoBehaviour {
     bool hasBeenCollected = false;
 
     public int value = 1;
+
+    GameObject player;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
 
     private void Awake()
     {
@@ -43,13 +50,16 @@ public class Collectable : MonoBehaviour {
         hasBeenCollected = true;
 
         switch(this.type){
-            case CollectableType.money:
+            case CollectableType.empanadas:
+                GameManager.sharedInstance.CollectObject(this);
                 break;
 
             case CollectableType.healthPotion:
+               player.GetComponent<PlayerController>().CollectHealth(this.value);
                 break;
 
             case CollectableType.manaPotion:
+                player.GetComponent<PlayerController>().CollectMana(this.value);
                 break;
         }
     }

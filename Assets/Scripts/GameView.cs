@@ -15,7 +15,7 @@ public class GameView : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(GameManager.sharedInstance.currentGameState == GameState.inGame){
-            int empanadas = 0;
+            int empanadas = GameManager.sharedInstance.collectedObject;
             float score = 0;
             float maxScore = 0;
 

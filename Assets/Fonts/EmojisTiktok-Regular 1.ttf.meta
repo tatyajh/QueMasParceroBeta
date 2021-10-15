@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0b8b9ba312225f946a7f8e6637bf2d2b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Emojis Tiktok
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b0e106f59474b5148be4912c13efadbf, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

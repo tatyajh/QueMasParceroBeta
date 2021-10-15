@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour {
         MAX_HEALTH = 200, MAX_MANA = 30,
         MIN_HEALTH = 10, MIN_MANA = 0;
 
+    public const int SUPERJUMP_COST = 5;
+    public const float SUPERJUMP_FORCE = 1.5f;
+
     public LayerMask groundMask;
 
     void Awake()
@@ -56,9 +59,13 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(Input.GetButtonDown("Jump")){
-            Jump();
+            Jump(false);
         }
-
+        
+        if (Input.GetButtonDown("SuperJump"))
+        {
+            Jump(true);
+        }
         animator.SetBool(STATE_ON_THE_GROUND, IsTouchingTheGround());
 
         Debug.DrawRay(this.transform.position, Vector2.down * 1.5f, Color.red);
@@ -79,13 +86,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void Jump()
+    void Jump(bool  superjump)
     {
+        float jumpForceFactor = jumpForce;
+        if (superjump && manaPoints>=SUPERJUMP_COST){
+            manaPoints -= SUPERJUMP_COST;
+            jumpForceFactor *= SUPERJUMP_FORCE;
+        
+        }
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
             if (IsTouchingTheGround())
             {
-                rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rigidBody.AddForce(Vector2.up * jumpForceFactor, ForceMode2D.Impulse);
             }
         }
     }
@@ -123,6 +136,13 @@ public class PlayerController : MonoBehaviour {
     }*/
 
     public void Die(){
+        float travelledDistance = GetTravelledDistance();
+        float previousMaxDistance = PlayerPrefs.GetFloat("maxscore",0f);
+        if (travelledDistance > previousMaxDistance)
+        {
+            PlayerPrefs.SetFloat("maxscore", travelledDistance);
+        }
+
         this.animator.SetBool(STATE_ALIVE, false);
         GameManager.sharedInstance.GameOver();
     }
@@ -157,6 +177,10 @@ public class PlayerController : MonoBehaviour {
             return manaPoints;
         }
 
+        public float GetTravelledDistance()
+         {
+        return this.transform.position.x - startPosition.x;
+         }
     }
 
 

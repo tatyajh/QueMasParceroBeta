@@ -17,12 +17,14 @@ public class PlayerController : MonoBehaviour {
 
     private int healthPoints, manaPoints;
 
-    public const int INITIAL_HEALTH = 100, INITIAL_MANA = 15,
-        MAX_HEALTH = 200, MAX_MANA = 30,
+    public const int INITIAL_HEALTH = 200, INITIAL_MANA = 10,
+        MAX_HEALTH = 400, MAX_MANA = 50,
         MIN_HEALTH = 10, MIN_MANA = 0;
 
     public const int SUPERJUMP_COST = 5;
     public const float SUPERJUMP_FORCE = 1.5f;
+
+    public float jumpRaycastDistance = 1.5f;
 
     public LayerMask groundMask;
 
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour {
         }
         animator.SetBool(STATE_ON_THE_GROUND, IsTouchingTheGround());
 
-        Debug.DrawRay(this.transform.position, Vector2.down * 1.5f, Color.red);
+        Debug.DrawRay(this.transform.position, Vector2.down * jumpRaycastDistance, Color.red);
 	}
 
     void FixedUpdate()
@@ -98,6 +100,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (IsTouchingTheGround())
             {
+                GetComponent<AudioSource>().Play();
                 rigidBody.AddForce(Vector2.up * jumpForceFactor, ForceMode2D.Impulse);
             }
         }
@@ -107,7 +110,7 @@ public class PlayerController : MonoBehaviour {
     bool IsTouchingTheGround(){
         if(Physics2D.Raycast(this.transform.position,
                              Vector2.down,
-                             1.5f, 
+                             jumpRaycastDistance, 
                              groundMask)){
             return true;
         }else {
@@ -153,6 +156,11 @@ public class PlayerController : MonoBehaviour {
         {
             this.healthPoints = MAX_HEALTH;
 
+        }
+
+        if (this.healthPoints <= 0)
+        {
+            Die();
         }
     }
 

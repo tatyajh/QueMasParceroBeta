@@ -12,8 +12,6 @@ public class LevelManager : MonoBehaviour {
 
     public Transform levelStartPosition;
 
-   // public Collectable itemCollectable;
-
     void Awake()
     {
         if(sharedInstance == null){
@@ -23,11 +21,6 @@ public class LevelManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GenerateInitialBlocks();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 
@@ -76,59 +69,4 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-   /* private void GenerateEmpanada(Vector3 blockPosition)
-    {
-        int randomGen = Random.Range(1, 5);
-        Vector3 spawnEmpanada= blockPosition;
-
-        for (int i = 0; i < randomGen; i++)
-        {
-            Collectable empanada = Instantiate(itemCollectable);
-            spawnEmpanada = new Vector3(
-                spawnEmpanada.x + Random.Range(5, 10),
-                spawnEmpanada.y + Random.Range(-3, 3),
-                0
-            );
-            empanada.transform.SetParent(this.transform, false);
-            empanada.transform.position = spawnEmpanada;
-            if (spawnEmpanada.y > 10 || spawnEmpanada.y < -5)
-            {
-                spawnEmpanada.y = 0;
-            }
-        }
-
-    }
-
-
-    public void AddLevelBlock()
-    {
-        int randomIdx = Random.Range(0, allTheLevelBlocks.Count);
-
-        LevelBlock block;
-
-        Vector3 spawnPosition = Vector3.zero;
-
-        if (currentLevelBlocks.Count == 0)
-        {
-            block = Instantiate(allTheLevelBlocks[0]);
-            spawnPosition = levelStartPosition.position;
-        }
-        else
-        {
-            block = Instantiate(allTheLevelBlocks[randomIdx]);
-            spawnPosition = currentLevelBlocks[currentLevelBlocks.Count - 1].exitPoint.position;
-        }
-
-        block.transform.SetParent(this.transform, false);
-
-        Vector3 correction = new Vector3(
-            spawnPosition.x - block.startPoint.position.x,
-            spawnPosition.y - block.startPoint.position.y,
-            0
-        );
-
-        block.transform.position = correction;
-        GenerateEmpanada(correction);
-        currentLevelBlocks.Add(block);
-    }*/
 }

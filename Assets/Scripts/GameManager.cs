@@ -42,8 +42,9 @@ public class GameManager : MonoBehaviour {
 	}
 
     public void StartGame(){
+        collectedObject = 0; //Reiniciar el contador de empanadas en cada partida
         SetGameState(GameState.inGame);
-    } 
+    }
 
     public void GameOver(){
         SetGameState(GameState.gameOver);

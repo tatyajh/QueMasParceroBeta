@@ -16,8 +16,6 @@ public class Collectable : MonoBehaviour {
     private SpriteRenderer sprite;
     private CircleCollider2D itemCollider;
 
-    bool hasBeenCollected = false;
-
     public int value = 1;
 
     GameObject player;
@@ -33,13 +31,6 @@ public class Collectable : MonoBehaviour {
         itemCollider = GetComponent<CircleCollider2D>();
     }
 
-    void Show(){
-        sprite.enabled = true;
-        itemCollider.enabled = true;
-        hasBeenCollected = false;
-    }
-
-
     void Hide(){
         sprite.enabled = false;
         itemCollider.enabled = false;
@@ -47,7 +38,6 @@ public class Collectable : MonoBehaviour {
 
     void Collect(){
         Hide();
-        hasBeenCollected = true;
 
         switch(this.type){
             case CollectableType.empanadas:

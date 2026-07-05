@@ -10,25 +10,25 @@ public class Enemy : MonoBehaviour
     public int enemyDamage = 10;
 
     Rigidbody2D rigidBody;
+    Collider2D bodyCollider;
 
     public bool facingRight = false;
 
-    private Vector3 startPosition;
+    private bool isDying = false;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        startPosition = this.transform.position;
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-        this.transform.position = startPosition;
+        bodyCollider = GetComponent<Collider2D>();
     }
 
     private void FixedUpdate()
     {
+        if (isDying)
+        {
+            return;
+        }
+
         float currentRunningSpeed = runningSpeed;
 
         if (facingRight)
@@ -46,29 +46,68 @@ public class Enemy : MonoBehaviour
 
         if (GameManager.sharedInstance.currentGameState == GameState.inGame)
         {
-            rigidBody.velocity = new Vector2(currentRunningSpeed,
-                                             rigidBody.velocity.y);
+            rigidBody.linearVelocity = new Vector2(currentRunningSpeed,
+                                             rigidBody.linearVelocity.y);
         }
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Empanada")
+        if (isDying)
         {
             return;
         }
 
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().
-                     CollectHealth(-enemyDamage);
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+
+            //Si el jugador cae desde arriba, elimina al enemigo;
+            //si lo toca de lado, recibe daño
+            Rigidbody2D playerBody = collision.attachedRigidbody;
+            bool stomp = playerBody != null &&
+                         playerBody.linearVelocity.y < -0.5f &&
+                         collision.bounds.min.y >= bodyCollider.bounds.center.y;
+
+            if (stomp)
+            {
+                player.BounceUp();
+                Die();
+            }
+            else
+            {
+                player.CollectHealth(-enemyDamage);
+            }
             return;
         }
 
+        //Ignorar coleccionables y zonas invisibles del nivel:
+        //el enemigo solo debe girar al chocar con muros o suelo
+        if (collision.CompareTag("Empanada") ||
+            collision.GetComponent<Collectable>() != null ||
+            collision.GetComponent<ExitZone>() != null ||
+            collision.GetComponent<KillZone>() != null)
+        {
+            return;
+        }
 
         facingRight = !facingRight;
     }
 
+    private void Die()
+    {
+        isDying = true;
+        rigidBody.simulated = false;
+        bodyCollider.enabled = false;
+        GetComponent<SpriteRenderer>().flipY = true;
 
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play();
+        }
+
+        Destroy(this.gameObject, 0.6f);
+    }
 }

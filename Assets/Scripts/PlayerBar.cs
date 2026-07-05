@@ -12,11 +12,13 @@ public enum BarType
 public class PlayerBar : MonoBehaviour
 {
     private Slider slider;
+    private PlayerController player;
     public BarType type;
     // Start is called before the first frame update
     void Start()
     {
         slider = GetComponent<Slider>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
         switch (type)
         {
             case BarType.healthBar:
@@ -35,17 +37,12 @@ public class PlayerBar : MonoBehaviour
         switch (type)
         {
             case BarType.healthBar:
-                slider.value = GameObject.Find("Player").
-                  GetComponent<PlayerController>().GetHealth();
+                slider.value = player.GetHealth();
                 break;
 
             case BarType.manaBar:
-                slider.value = GameObject.Find("Player").
-                  GetComponent<PlayerController>().GetMana();
+                slider.value = player.GetMana();
                 break;
-
-
-
         }
 
     }

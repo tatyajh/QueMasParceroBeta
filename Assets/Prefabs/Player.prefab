@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b8edd51e8624b1499b248fce014161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 30
+  jumpForce: 34
   runningSpeed: 2.5
   groundMask:
     serializedVersion: 2
@@ -170,7 +170,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 7414271115511988192}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cffcd41a5da945eb974bda7a08220c0d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

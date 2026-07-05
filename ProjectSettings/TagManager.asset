@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Empanada
+  - Coin
   layers:
   - Default
   - TransparentFX

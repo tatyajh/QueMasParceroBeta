@@ -1,6 +1,8 @@
 # ¡Qué Más Parcero!
 
-Juego de plataformas 2D estilo *endless runner* con temática colombiana, desarrollado en **Unity** y **C#**. Controlas a un frijol que corre automáticamente, esquiva enemigos y recolecta empanadas mientras el nivel se genera proceduralmente.
+Juego de plataformas 2D estilo *endless runner* con temática colombiana, desarrollado en **Unity** y **C#** para el curso de **Ubicua**. Controlas a un paisa que recorre los tejados de una comuna, esquivando frijoles saltarines y recolectando empanadas mientras el nivel se genera proceduralmente.
+
+🎮 **Juégalo en el navegador:** [tarjah.itch.io/quemasparcero](https://tarjah.itch.io/quemasparcero)
 
 ![Unity](https://img.shields.io/badge/Unity-2021.1-black?logo=unity)
 ![C%23](https://img.shields.io/badge/C%23-Scripts-239120?logo=csharp)
@@ -14,7 +16,7 @@ Juego de plataformas 2D estilo *endless runner* con temática colombiana, desarr
 | Super salto (gasta maná) | ver Input Manager (`SuperJump`) |
 
 - Recolecta **empanadas** para sumar puntos.
-- Los **enemigos** te quitan vida al tocarte; las pociones la recuperan.
+- Los **frijoles** te quitan vida al tocarte (¡o elimínalos saltándoles encima!); la poción roja recupera vida y la azul da maná.
 - Si te caes al vacío, pierdes. Tu **récord de distancia** se guarda entre sesiones.
 
 ## 🛠️ Características técnicas
